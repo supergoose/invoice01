@@ -20,6 +20,8 @@ $editing_node->english->description = $english_description;
 $editing_node->arabic->description = $arabic_description;
 
 
-$xml->asXml('content.xml')
+$xml->asXml('content.xml');
+
+header( 'Location: edit/slideshow.html' ) ;
 
 ?>

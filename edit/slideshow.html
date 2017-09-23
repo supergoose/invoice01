@@ -37,7 +37,11 @@
                         //Populate the list
                         slides.forEach(function(element){
                             var slide_listitem = document.createElement("li");
-                            slide_listitem.innerHTML = element.background + " <a href='slide.php?slideId="+element['@attributes'].id+"'>Edit</a>";
+                            var enbld = (element['@attributes'].enabled == "yes")? "Disable":"Enable";
+                            slide_listitem.innerHTML = element.background + 
+                            " <a href='#' onclick='toggleSlide("+element['@attributes'].id+")'>" + enbld + "</a>" +
+                            " <a href='slide.php?slideId="+element['@attributes'].id+"'>Edit</a>" + 
+                            " <a href='#' onclick='deleteSlide("+element['@attributes'].id+")'>Delete</a>";
                             slidelist_element.appendChild(slide_listitem);
                         });
 
@@ -48,6 +52,77 @@
                 xhttp.send();
             }
             
+            function resetList()
+            {
+                //Get the list element
+                var slidelist_element = document.getElementById("slidelist");
+                
+                slidelist_element.innerHTML = '';
+                pageLoaded();
+            }
+            
+            function toggleSlide(slideId)
+            {
+                console.log("Toggling: " + slideId);
+                
+                
+                
+                //Get the XML
+                var xhttp = new XMLHttpRequest();
+                xhttp.open("GET", "/toggleslide.php?slideId="+slideId+"&t="+Math.random(), true);
+                
+                //When we have received data
+                xhttp.onreadystatechange = function()
+                {
+                    //Check was successful
+                    if(this.readyState == 4 && this.status == 200)
+                    {
+                        console.log("successful");
+                        
+                        var list_element = document.getElementById("slidelist").childNodes[slideId+1];
+                        
+                        if(this.responseText == '1')
+                        {
+                            list_element.innerHTML = list_element.innerHTML.replace("Enable", "Disable");
+                        }else{
+                            list_element.innerHTML = list_element.innerHTML.replace("Disable", "Enable");
+                        }
+
+                    }
+                }
+                
+                //Get doc asynchronously
+                xhttp.send();
+            }
+            
+            function deleteSlide(slideId)
+            {
+                if(!confirm("Are you sure you wish to delete this slide?"))
+                {
+                    return;
+                }
+                //Get the XML
+                var xhttp = new XMLHttpRequest();
+                xhttp.open("GET", "/deleteslide.php?slideId="+slideId+"&t="+Math.random(), true);
+                
+                //When we have received data
+                xhttp.onreadystatechange = function()
+                {
+                    //Check was successful
+                    if(this.readyState == 4 && this.status == 200)
+                    {
+                        console.log("delete successful: " + this.responseText);
+                        
+                        var list_element = document.getElementById("slidelist");
+                        var child_element = list_element.childNodes[slideId+1];
+                        list_element.removeChild(child_element);
+
+                    }
+                }
+                
+                //Get doc asynchronously
+                xhttp.send();
+            }
             
             
         </script>
