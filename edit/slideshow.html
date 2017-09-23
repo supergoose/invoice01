@@ -1,6 +1,7 @@
 <html>
     <head>
         <title>Edit Slideshow</title>
+        <script type="text/javascript" src="../lib/js/mousetrap.js"></script>
     </head>
     <body onload="pageLoaded();">
         <h1>Edit</h1>
@@ -8,6 +9,7 @@
         <ol id="slidelist">
         </ol>
         <p>Add slide</p>
+        <p>Slideshow speed:</p>
         <script>
             
             var slides;
@@ -123,6 +125,12 @@
                 //Get doc asynchronously
                 xhttp.send();
             }
+
+            //If the user presses space we need to navigate to our edit mode
+            Mousetrap.bind('space', function(e) {
+                window.location.href = "/run.html";
+                
+            });
             
             
         </script>
