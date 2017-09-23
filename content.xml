@@ -1,0 +1,29 @@
+<?xml version="1.0" standalone="yes"?>
+<slideshow fadetime="5.0">
+    <slide id="0" enabled="yes">
+        <background type="video">somemovie.mp4</background>
+    </slide>
+    <slide id="2" enabled="yes">
+        <background type="image">background1.jpg</background>
+        <english>
+            <title>English title</title>
+            <description>English title</description>
+        </english>
+        <arabic>
+            <title>Arabic title 2</title>
+            <description>blah blah</description>
+        </arabic>
+    </slide>
+    <slide id="1" enabled="yes">
+        <background type="image">background1.jpg</background>
+        <english>
+            <title>English title</title>
+            <description>This text will overlay on the first image</description>
+        </english>
+        <arabic>
+            <title>&#x636;&#x635;&#x62B;&#x64A;&#x633;&#x628;</title>
+            <description>&#x636;&#x635;&#x62B;&#x64A;&#x633;&#x628;</description>
+        </arabic>
+    </slide>
+    
+</slideshow>
