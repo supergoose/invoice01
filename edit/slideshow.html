@@ -1,8 +1,55 @@
-<h1>Edit</h1>
-<h2>Slides</h2>
-<ol>
-    <li>Slide 1 <a href="slide.html">Edit</a></li>
-    <li>Slide 2 <a href="slide.html">Edit</a></li>
-    <li>Slide 3 <a href="slide.html">Edit</a></li>
-</ol>
-<p>Add slide</p>
+<html>
+    <head>
+        <title>Edit Slideshow</title>
+    </head>
+    <body onload="pageLoaded();">
+        <h1>Edit</h1>
+        <h2>Slides</h2>
+        <ol id="slidelist">
+        </ol>
+        <p>Add slide</p>
+        <script>
+            
+            var slides;
+        
+            //Run on page load complete
+            function pageLoaded()
+            {
+                console.log("Page loaded");
+                
+                //Get the XML
+                var xhttp = new XMLHttpRequest();
+                xhttp.open("GET", "/loadxml.php?t="+Math.random(), true);
+                
+                //When we have received data
+                xhttp.onreadystatechange = function()
+                {
+                    //Check was successful
+                    if(this.readyState == 4 && this.status == 200)
+                    {
+                        console.log(this.responseText);
+                        var slides = JSON.parse(this.responseText); //parse it into a JS array of objects
+                        console.log(slides[0]["@attributes"]);
+                        
+                        //Get the list element
+                        var slidelist_element = document.getElementById("slidelist");
+                        
+                        //Populate the list
+                        slides.forEach(function(element){
+                            var slide_listitem = document.createElement("li");
+                            slide_listitem.innerHTML = element.background + " <a href='slide.php?slideId="+element['@attributes'].id+"'>Edit</a>";
+                            slidelist_element.appendChild(slide_listitem);
+                        });
+
+                    }
+                }
+                
+                //Get doc asynchronously
+                xhttp.send();
+            }
+            
+            
+            
+        </script>
+    </body>
+</html>
