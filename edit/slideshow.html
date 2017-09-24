@@ -2,11 +2,34 @@
     <head>
         <title>Edit Slideshow</title>
         <script type="text/javascript" src="../lib/js/mousetrap.js"></script>
+        
+        <link rel="stylesheet" href="/lib/js/jquery-ui/jquery-ui.css">
+        <style>
+            #sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+            #sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
+            #sortable li span { position: absolute; margin-left: -1.3em; }
+        </style>
+        <script src="/lib/js/jquery.js"></script>
+        <script src="/lib/js/jquery-ui/jquery-ui.js"></script>
+        <script>
+        /* global $ */
+            $( function() {
+            $( ".sortable" ).sortable({
+                    stop: function( event, ui ) {
+                        console.log(ui.item);
+                        
+                        //move this item to new thing
+                        
+                    }
+                });
+            $( ".sortable" ).disableSelection();
+            } );
+        </script>
     </head>
     <body onload="pageLoaded();">
         <h1>Edit</h1>
         <h2>Slides</h2>
-        <ol id="slidelist"></ol>
+        <ol id="slidelist" class="sortable"></ol>
         <p><a href="#" onclick="addSlide()">Add slide</a></p>
         <script>
         
@@ -33,10 +56,12 @@
                         slides.forEach(function(element){
                             var slide_listitem = document.createElement("li");
                             var enbld = (element['@attributes'].enabled == "yes")? "Disable":"Enable";
-                            slide_listitem.innerHTML = element.english.title + 
+                            slide_listitem.innerHTML = "<span class='ui-icon ui-icon-arrowthick-2-n-s'></span>" + element.english.title + 
                             " <a href='#' onclick='toggleSlide("+element['@attributes'].id+")'>" + enbld + "</a>" +
                             " <a href='slide.php?slideId="+element['@attributes'].id+"'>Edit</a>" + 
                             " <a href='#' onclick='deleteSlide("+element['@attributes'].id+")'>Delete</a>";
+                            slide_listitem.setAttribute('class',  'ui-state-default');
+                            slide_listitem.setAttribute('slide_id',  element["@attributes"].id);
                             slidelist_element.appendChild(slide_listitem);
                         });
 
