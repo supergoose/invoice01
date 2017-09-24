@@ -33,7 +33,7 @@
                 <textarea name="arabictext" rows="10" cols="30" id="arabictext"></textarea></p>
                 <p>Duration: <input type="text" value="" name="duration" id="duration"></input></p>
             </div>
-            <p>Slide position: <input type="text" value="<?php echo $_GET['slideId']; ?>" name="slideId"></input></p>
+            <p style="display:none;>Slide position: <input type="text" value="<?php echo $_GET['slideId']; ?>" name="slideId""></input></p>
             
             <p><input type="submit" value="Save"/></p>
         </form>
