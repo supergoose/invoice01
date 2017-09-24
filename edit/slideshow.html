@@ -6,17 +6,13 @@
     <body onload="pageLoaded();">
         <h1>Edit</h1>
         <h2>Slides</h2>
-        <ol id="slidelist">
-        </ol>
-        <p>Add slide</p>
+        <ol id="slidelist"></ol>
+        <p><a href="#" onclick="addSlide()">Add slide</a></p>
         <script>
-            
-            var slides;
         
             //Run on page load complete
             function pageLoaded()
             {
-                console.log("Page loaded");
                 
                 //Get the XML
                 var xhttp = new XMLHttpRequest();
@@ -62,10 +58,7 @@
             
             function toggleSlide(slideId)
             {
-                console.log("Toggling: " + slideId);
-                
-                
-                
+
                 //Get the XML
                 var xhttp = new XMLHttpRequest();
                 xhttp.open("GET", "/toggleslide.php?slideId="+slideId+"&t="+Math.random(), true);
@@ -76,9 +69,8 @@
                     //Check was successful
                     if(this.readyState == 4 && this.status == 200)
                     {
-                        console.log("successful");
-                        
-                        var list_element = document.getElementById("slidelist").childNodes[slideId+1];
+                        console.log(document.getElementById("slidelist").childNodes);
+                        var list_element = document.getElementById("slidelist").childNodes[slideId];
                         
                         if(this.responseText == '1')
                         {
@@ -94,9 +86,32 @@
                 xhttp.send();
             }
             
+            function addSlide()
+            {
+                //Get the XML
+                var xhttp = new XMLHttpRequest();
+                xhttp.open("GET", "/addslide.php?t="+Math.random(), true);
+                
+                //When we have received data
+                xhttp.onreadystatechange = function()
+                {
+                    //Check was successful
+                    if(this.readyState == 4 && this.status == 200)
+                    {
+                        window.location.href = "slide.php?slideId="+this.responseText;
+
+                    }
+                }
+                
+                //Get doc asynchronously
+                xhttp.send();
+                
+                
+            }
+            
             function deleteSlide(slideId)
             {
-                if(!confirm("Are you sure you wish to delete this slide?"))
+                if(!confirm("Are you sure you want to delete this slide?"))
                 {
                     return;
                 }
@@ -110,10 +125,8 @@
                     //Check was successful
                     if(this.readyState == 4 && this.status == 200)
                     {
-                        console.log("delete successful: " + this.responseText);
-                        
                         var list_element = document.getElementById("slidelist");
-                        var child_element = list_element.childNodes[slideId+1];
+                        var child_element = list_element.childNodes[slideId];
                         list_element.removeChild(child_element);
 
                     }

@@ -1,16 +1,40 @@
 <html>
     <head>
         <title>Edit Slide</title>
+        <script type="text/javascript" src="../lib/js/mousetrap.js"></script>
     </head>
     <body onload="pageLoaded();">
         <p><a href="slideshow.html">Cancel</a></p>
         <form action="/savexml.php" method="POST">
-            <p><input type="file" name="background" /></p>
-            <p><input type="text" name="englishtitle" id="englishtitle" value=""></input><input type="text" name="arabictitle" id="arabictitle" value=""></input></p>
-            <p><textarea name="englishtext" rows="10" cols="30" id="englishtext"></textarea>
-            <textarea name="arabictext" rows="10" cols="30" id="arabictext"></textarea></p>
+            <p>Background: <select name="background" onchange="selectedbg()" id="selectbg">
+            <?php 
+            
+            $dir    = '../assets';
+            $images = array_slice(scandir($dir), 2);
+
+            $extensions = array('jpg', 'jpeg', 'png', 'mp4');
+            
+            foreach($images as $filename){
+                
+                $filename = basename($filename);
+                $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+                if(in_array($ext, $extensions))
+                {
+                    echo "<option value='assets/" . $filename . "'>".$filename."</option>";
+                }
+                
+            }
+            ?>
+            </select>
+            </p>
+            <div id="textentry">
+                <p><input type="text" name="englishtitle" id="englishtitle" value=""></input><input type="text" name="arabictitle" id="arabictitle" value=""></input></p>
+                <p><textarea name="englishtext" rows="10" cols="30" id="englishtext"></textarea>
+                <textarea name="arabictext" rows="10" cols="30" id="arabictext"></textarea></p>
+                <p>Duration: <input type="text" value="" name="duration" id="duration"></input></p>
+            </div>
             <p>Slide position: <input type="text" value="<?php echo $_GET['slideId']; ?>" name="slideId"></input></p>
-            <p>Duration: <input type="text" value="" name="duration" id="duration"></input></p>
+            
             <p><input type="submit" value="Save"/></p>
         </form>
         
@@ -33,6 +57,14 @@
                     {
                         console.log(this.responseText);
                         var slide = JSON.parse(this.responseText); //parse it into a JS array of objects
+                        
+                        var file_options = [].slice.call(document.getElementsByTagName('option'));
+                        
+                        var selected_file = file_options.filter(function(option){
+                            return (option.value.indexOf(slide.background) > -1);
+                        })[0];
+                        
+                        selected_file.setAttribute('selected','selected');
                         document.getElementById('duration').value = slide['@attributes'].fadetime;
                         document.getElementById("englishtitle").value = slide.english.title;
                         document.getElementById("arabictitle").value = slide.arabic.title;
@@ -44,6 +76,26 @@
                 //Get doc asynchronously
                 xhttp.send();
             }
+            
+            function selectedbg()
+            {
+                var vid_extensions = ['mp4'];
+                var file_extension = document.getElementById('selectbg').value.split('.').pop();
+                if(vid_extensions.indexOf(file_extension) > -1)
+                {
+                    console.log("selected video");
+                    document.getElementById('textentry').style.display = 'none';
+                }else{
+                    document.getElementById('textentry').style.display = 'block';
+                }
+                
+            }
+            
+            //If the user presses space we need to navigate to our edit mode
+            Mousetrap.bind('space', function(e) {
+                window.location.href = "/run.html";
+                
+            });
             
         </script>
     </body>
