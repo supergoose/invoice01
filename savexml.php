@@ -14,7 +14,7 @@ $arabic_description = '';
 $duration = '';
 
 
-$background = $_POST["background"];
+$background = $_POST['background'];
 
 $img_extensions = array('jpg', 'jpeg', 'png');
 $vid_extensions = array('mp4');

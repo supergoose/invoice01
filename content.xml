@@ -1,11 +1,11 @@
 <?xml version="1.0" standalone="yes"?>
 <slideshow>
-    <slide id="0" enabled="no" type="video" fadetime="">
+    <slide id="0" enabled="yes" type="video" fadetime="">
         <background>assets/entrance.mp4</background>
         <english>
             <title>entrance.mp4</title>
-        <description/></english>
-    <arabic><title/></arabic></slide>
+        <description></description></english>
+    <arabic><title></title></arabic></slide>
     
     <slide id="1" enabled="yes" type="image" fadetime="5.0">
         <background>assets/coffee_shop.jpg</background>
@@ -19,7 +19,7 @@
         </arabic>
     </slide>
     
-    <slide id="2" enabled="yes" type="image" fadetime="5.0">
+    <slide id="3" enabled="yes" type="image" fadetime="5.0">
         <background>assets/laughing.jpg</background>
         <english>
             <title>Page 2</title>
@@ -31,7 +31,7 @@
         </arabic>
     </slide>
     
-    <slide id="3" enabled="yes" type="image" fadetime="3.0">
+    <slide id="2" enabled="yes" type="image" fadetime="3.0">
         <background>assets/roof_shooting.jpg</background>
         <english>
             <title>Page 3</title>

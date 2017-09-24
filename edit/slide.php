@@ -33,7 +33,7 @@
                 <textarea name="arabictext" rows="10" cols="30" id="arabictext"></textarea></p>
                 <p>Duration: <input type="text" value="" name="duration" id="duration"></input></p>
             </div>
-            <p style="display:none;>Slide position: <input type="text" value="<?php echo $_GET['slideId']; ?>" name="slideId""></input></p>
+            <p style="display:none;">Slide position: <input type="text" value="<?php echo $_GET['slideId']; ?>" name="slideId"></input></p>
             
             <p><input type="submit" value="Save"/></p>
         </form>
@@ -75,7 +75,7 @@
                         if(selected_file){
                             selected_file.setAttribute('selected','selected');
                             toggleText(slide.background);
-                        }
+                        } //bug here
                         
                         document.getElementById('duration').value = (!slide['@attributes'].fadetime)?default_values['duration']:slide['@attributes'].fadetime;
                         document.getElementById("englishtitle").value = (!slide.english.title)?default_values['englishtitle']:slide.english.title;

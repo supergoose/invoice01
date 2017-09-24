@@ -16,10 +16,60 @@
             $( function() {
             $( ".sortable" ).sortable({
                     stop: function( event, ui ) {
-                        console.log(ui.item);
-                        
+
+                        var from = parseInt(ui.item.attr('slide_id'));
+                        var to = parseInt([].slice.call($( ".sortable" ).children()).indexOf(ui.item.get(0)));
                         //move this item to new thing
+                        console.log("From: " + from + ", " + " To " + to);
                         
+                        
+                        
+                        //Get the XML
+                        var xhttp = new XMLHttpRequest();
+                        xhttp.open("GET", "/moveslide.php?from="+from+"&to="+to+"&t="+Math.random(), true);
+                        
+                        //When we have received data
+                        xhttp.onreadystatechange = function()
+                        {
+                            //Check was successful
+                            if(this.readyState == 4 && this.status == 200)
+                            {
+                                console.log("Success!");
+                                
+                                //Get the list element
+                                var slidelist_element = [].slice.call(document.getElementById("slidelist").childNodes);
+                                console.log("List: " + slidelist_element);
+                                //Populate the list
+                                slidelist_element.forEach(function(element){
+                                    
+                                    var curId = parseInt($(element).attr('slide_id'));
+                                    
+                                    console.log("Testing: " + curId + " vs. " + from);
+                                    
+                                    if(curId == from)
+                                    {
+                                        $(element).attr('slide_id',''+to);
+                                        console.log($(element).find('a')[1].href);
+                                        $(element).find('a')[1].href = 'slide.php?slideId='+to;
+                                    }else if(curId < from && curId >= to)
+                                    {
+                                        curId++;
+                                        $(element).attr('slide_id',curId);
+                                        $(element).find('a')[1].href = 'slide.php?slideId='+curId;
+                                    }else if(curId > from && curId <= to)
+                                    {
+                                        curId--;
+                                        $(element).attr('slide_id',curId);
+                                        $(element).find('a')[1].href = 'slide.php?slideId='+curId;
+                                    }
+                                    
+                                });
+                                
+                                
+                            }
+                        }
+                        
+                        xhttp.send();
                     }
                 });
             $( ".sortable" ).disableSelection();
