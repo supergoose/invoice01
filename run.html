@@ -118,164 +118,175 @@
 
 		<img id="cycle-loader" src="lib/images/ajax-loader.gif" />
 		<div id="maximage">
-			<!--<img data-href="0.000001" id='gradient' src='lib/images/fadepx.jpg' alt='' id='remove-me' />-->
+			
 			
 		</div>
         
         <script>
         
-        var dirty = false;
-        var vids = 0;
-        var first = true;
-        var minVidDuration = Number.MAX_VALUE;
-        //Run on page load complete
-            function pageLoaded()
-            {
-                console.log("Page loaded");
-                
-                //Get the XML
-                var xhttp = new XMLHttpRequest();
-                xhttp.open("GET", "/loadxml.php?t="+Math.random(), true);
-                
-                //When we have received data
-                xhttp.onreadystatechange = function()
-                {
-                    //Check was successful
-                    if(this.readyState == 4 && this.status == 200)
-                    {
-                        var slides = JSON.parse(this.responseText); //parse it into a JS array of objects
-                        
-                        
-                        console.log("Slides: " + slides); //remove the ones with enabled = no
-                        slides = slides.filter(function(slide){
-                        	return (slide['@attributes'].enabled == 'yes')
-                        });
-                        console.log("Slides: " + slides); //remove the ones with enabled = no
-                        
-                        if(slides.length < 2){
-                        	alert("There are not enough slides for a slideshow. Please include more than one slide.");
-                        	return;
-                        }
-                        
-                        //Get the maximage element
-                        var slideshow_div = document.getElementById("maximage");
-                        
-                        //Populate the list
-                        slides.forEach(function(element){
-                            
-                            //Create their node within div#maximage
-                            var slide = document.createElement("div");
-                            
-                            if(element['@attributes'].type == 'video')
-                            {
-                                var video_url = element.background;
-                                
-                                //Create video
-                                slide.className = 'video ' + (first)?'first-item':'';
-                                slide.innerHTML = "<img src='lib/images/fadepx.jpg' alt=''/><video muted='muted' preload='auto' width='640' height='360'  autobuffer='autobuffer' ><source src='"+video_url+"' type='video/mp4' />Your browser does not support HTML5 videos.</video>";
-  
-								//Wait until we know the duration of all our videos - this requires the video to have duration metadata (which most do)
-                                slide.getElementsByTagName('video')[0].addEventListener('durationchange', vidLoaded);
-                                vids++;
-                                
-                            }else{
-                                //Create vars we'll need for our image/text
-                                var background_image = element.background;
-                                var english_title = element.english.title;
-                                var arabic_title = element.arabic.title;
-                                var english_description = element.english.description;
-                                var arabic_description = element.arabic.description;
-                                var duration = parseFloat(element['@attributes'].fadetime);
-
-                                //Create pic and stuff
-                                slide.innerHTML = "<img data-href='"+duration+"' src='"+ background_image +"' alt=''  /><img id='gradient' src='lib/images/demo/gradient.png' alt='' /><div class='in-slide-content en' style='display:none;'><h2>"+english_title+"</h2><p>"+english_description+"</p></div><div class='in-slide-content arabic' style='display:none;'><h2>"+ arabic_title +"</h2><p>"+ arabic_description +"</p></div>"
-								slide.className = (first)?'first-item':'';
-                            }
-                            first = false;
-                            slideshow_div.appendChild(slide);
-
-                        });
-                        
-                        if(vids==0)startSlideshow();
-                        
-                    }
-                }
-                
-                //Get doc asynchronously
-                xhttp.send();
-            }
-            
-            function startSlideshow()
-                        {
-                        	$('#maximage').maximage({
-								cycleOptions: {
-									fx: 'fade',
-									speed: 1000, // Has to match the speed for CSS transitions in jQuery.maximage.css (lines 30 - 33)
-									timeoutFn: function(currElement, nextElement, opts, isForward) { //use a custom function to change the timing (if its a video, we want the full video duration)
-									    if($(currElement).find('video').length > 0) //this is not checking the length of the video, but the number of children which are of type video
-									    {
-									    	console.log("Duration: " + (isNaN($(currElement).find('video').get(0).duration)) ? minVidDuration:$(currElement).find('video').get(0).duration);
-									        return ((isNaN($(currElement).find('video').get(0).duration))?minVidDuration:$(currElement).find('video').get(0).duration)*1000;
-									        
-									    }else{
-									        return parseFloat($(currElement).attr('data-href'))*1000;
-									    }
-			                        },
-									prev: '#arrow_left',
-									next: '#arrow_right',
-									pause: 1,
-									before: function(last,current){
-										// Start HTML5 video when you arrive
-										if($(current).find('video').length > 0) $(current).find('video')[0].play();
-									},
-									after: function(last,current){
-										// Pauses HTML5 video when you leave it
-										if(dirty){
-											if($(last).find('video').length > 0){
-												$(last).find('video')[0].pause(); //don't call on the first slide!
-												$(last).find('video')[0].currentTime = 0;
-											} 
-											
-										}else{
-											dirty = true;
-										}
-
-									}
-								},
-								onFirstImageLoaded: function(){
-									jQuery('#cycle-loader').hide();
-									jQuery('#maximage').fadeIn('fast');
-									
-								}
-							});
+	        var dirty = false;
+	        var vids = 0;
+	        var first = true;
+	        var minVidDuration = Number.MAX_VALUE;
+	        //Run on page load complete
+	        function pageLoaded()
+	        {
+	            console.log("Page loaded");
+	            
+	            //Get the XML
+	            var xhttp = new XMLHttpRequest();
+	            xhttp.open("GET", "/loadxml.php?t="+Math.random(), true);
+	            
+	            //When we have received data
+	            xhttp.onreadystatechange = function()
+	            {
+	                //Check was successful
+	                if(this.readyState == 4 && this.status == 200)
+	                {
+	                	
+	                    var slides = JSON.parse(this.responseText); //parse it into a JS array of objects
+	                    
+	                    //Filter the slides to only those 'enabled'
+	                    slides = slides.filter(function(slide){
+	                    	return (slide['@attributes'].enabled == 'yes')
+	                    });
+	                    
+	                    //If there aren't enough slides, alert the user
+	                    if(slides.length < 2){
+	                    	alert("There are not enough slides for a slideshow. Please include more than one slide.");
+	                    	return;
+	                    }
+	                    
+	                    //Get the maximage element
+	                    var slideshow_div = document.getElementById("maximage");
+	                    
+	                    //Populate the list
+	                    slides.forEach(function(element){
+	                        
+	                        //Create their node within div#maximage
+	                        var slide = document.createElement("div");
+	                        
+	                        //Videos go here
+	                        if(element['@attributes'].type == 'video')
+	                        {
+	                            var video_url = element.background;
+	                            
+	                            //Create video
+	                            slide.className = 'video ' + (first)?'first-item':'';
+	                            slide.innerHTML = "<img src='lib/images/fadepx.jpg' alt=''/><video muted='muted' preload='auto' width='640' height='360'  autobuffer='autobuffer' ><source src='"+video_url+"' type='video/mp4' />Your browser does not support HTML5 videos.</video>";
 	
-							// Helper function to Fill and Center the HTML5 Video
-							jQuery('video,object').maximage('maxcover');
-				
-							// To show it is dynamic html text
-							jQuery('.in-slide-content').delay(1200).fadeIn();
-                        }
-                        
-                        function vidLoaded(evt)
-                        {
-                        	if(evt.target.duration < minVidDuration)minVidDuration = evt.target.duration;
-                        	vids--;
-                        	
-                        	if(vids == 0)
-                        	{
-                        		//run the rest
-                        		console.log("vids all loaded");
-                        		
-                        		startSlideshow();
-                        	}
-                        }
-            
-        
-            //If the user presses space we need to navigate to our edit mode
-            Mousetrap.bind('space', function(e) {
-                window.location.href = "/edit/slideshow.html";
-                
-            });
+								//Wait until we know the duration of all our videos - this requires the video to have duration metadata (which most do)
+	                            slide.getElementsByTagName('video')[0].addEventListener('durationchange', vidLoaded);
+	                            vids++;
+	                            
+	                        }else{
+	                            //Create vars we'll need for our image/text
+	                            var background_image = element.background;
+	                            var english_title = element.english.title;
+	                            var arabic_title = element.arabic.title;
+	                            var english_description = element.english.description;
+	                            var arabic_description = element.arabic.description;
+	                            var duration = parseFloat(element['@attributes'].fadetime);
+	
+	                            //Create pic and stuff
+	                            slide.innerHTML = "<img data-href='"+duration+"' src='"+ background_image +"' alt=''  /><img id='gradient' src='lib/images/demo/gradient.png' alt='' /><div class='in-slide-content en' style='display:none;'><h2>"+english_title+"</h2><p>"+english_description+"</p></div><div class='in-slide-content arabic' style='display:none;'><h2>"+ arabic_title +"</h2><p>"+ arabic_description +"</p></div>"
+								slide.className = (first)?'first-item':'';
+	                        }
+	                        
+	                        //Unset first flag
+	                        first = false;
+	                        
+	                        //Add this slide element
+	                        slideshow_div.appendChild(slide);
+	
+	                    });
+	                    
+	                    //If there are no videos, dont bother waiting
+	                    if(vids==0)startSlideshow();
+	                    
+	                }
+	            }
+	            
+	            //Get doc asynchronously
+	            xhttp.send();
+	        }
+	        
+	        //Function which kicks off the slideshow using jQuery cycle + maxImage
+	        function startSlideshow()
+	        {
+	        	$('#maximage').maximage({
+					cycleOptions: {
+						fx: 'fade',
+						speed: 1000, // Has to match the speed for CSS transitions in jQuery.maximage.css (lines 30 - 33)
+						timeoutFn: function(currElement, nextElement, opts, isForward) { //use a custom function to change the timing (if its a video, we want the full video duration)
+						
+						//Some jiggery pokery to make sure that the first video plays. We failsafe to the shortest video length to make sure the slideshow still looks ok.
+						    if($(currElement).find('video').length > 0) //this is not checking the length of the video, but the number of children which are of type video
+						    {
+						        return ((isNaN($(currElement).find('video').get(0).duration))?minVidDuration:$(currElement).find('video').get(0).duration)*1000; //check if NaN, return min duration if so
+						    }else{
+						        return parseFloat($(currElement).attr('data-href'))*1000; //Our images store their length in the data-href attribute.
+						    }
+	                    },
+						prev: '#arrow_left', //legacy, ignore
+						next: '#arrow_right',
+						pause: 1,
+						before: function(last,current){
+							// Starts HTML5 video when you arrive at it
+							if($(current).find('video').length > 0) $(current).find('video')[0].play();
+						},
+						after: function(last,current){
+							// Pauses HTML5 video when you leave it
+							if(dirty){ //don't call if a video is the first slide
+								if($(last).find('video').length > 0){
+									$(last).find('video')[0].pause(); 
+									$(last).find('video')[0].currentTime = 0; //reset the time to the beginning (just in case we couldn't figure out video duration)
+								} 
+								
+							}else{
+								dirty = true;
+							}
+	
+						}
+					},
+					onFirstImageLoaded: function(){ //Called when the images have loaded - alters html to adhere to jQuery-cycle
+						jQuery('#cycle-loader').hide();
+						jQuery('#maximage').fadeIn('fast');
+					}
+				});
+	
+				// Helper function to Fill and Center the HTML5 Video
+				jQuery('video,object').maximage('maxcover');
+	
+				// Delay text fade in
+				jQuery('.in-slide-content').delay(1200).fadeIn();
+	        }
+	                    
+	        //This is called when we get the duration of our video
+	        function vidLoaded(evt)
+	        {
+	        	
+	        	//We have a safety variable minVidDuration which will be used if a video doesn't have 'duration'
+	        	if(!isNaN(evt.target.duration))
+	        	{
+	        		if(evt.target.duration < minVidDuration)minVidDuration = evt.target.duration;
+	        	}else{
+	        		minVidDuration = 60.0; //failsafe to 60 seconds for a video slide if all else fails
+	        	}
+	        	
+	        	//Test how many are left to load
+	        	vids--;
+	        	if(vids == 0)
+	        	{
+	        		startSlideshow();
+	        	}
+	        }
+	    
+	        //If the user presses space we need to navigate to our edit mode
+	        Mousetrap.bind('space', function(e) {
+	            window.location.href = "/edit/slideshow.html";
+	            
+	        });
         </script>
     </body>
 </html>
