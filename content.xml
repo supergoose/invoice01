@@ -1,6 +1,6 @@
 <?xml version="1.0" standalone="yes"?>
 <slideshow>
-    <slide id="0" enabled="no" type="video">
+    <slide id="0" enabled="yes" type="video">
         <background>assets/entrance.mp4</background>
         <english>
             <title>Video</title>
@@ -19,7 +19,7 @@
         </arabic>
     </slide>
     
-    <slide id="2" enabled="yes" type="image" fadetime="5.0">
+    <slide id="2" enabled="no" type="image" fadetime="5.0">
         <background>lib/images/demo/laughing.jpg</background>
         <english>
             <title>Page 2</title>
@@ -31,7 +31,7 @@
         </arabic>
     </slide>
     
-    <slide id="3" enabled="yes" type="image" fadetime="3.0">
+    <slide id="3" enabled="no" type="image" fadetime="3.0">
         <background>lib/images/demo/roof_shooting.jpg</background>
         <english>
             <title>Page 3</title>
