@@ -79,17 +79,30 @@
 				color:#333;
 				float:right;
 				font-family:'Helvetica Neue', helvetica;
-				font-size:60px;
+				line-height:2;
 				font-weight:bold;
-				right:0;
 				margin:40px;
 				padding:20px;
 				position:absolute;
 				top:0;
-				width:700px;
+				width:800px;
 				z-index:9999; /* Show above .gradient */
 				text-shadow: 0 1px 0 #fff;
 				-webkit-font-smoothing:antialiased;
+			}
+			.in-slide-content h2{
+			    font-size:40px;
+			}
+			
+			.in-slide-content p{
+			    font-size:20px;
+			}
+			.en{
+			    left:0;
+			}
+			.arabic{
+			    right:0;
+			    text-align: right;
 			}
 			.light-text {color:#ddd;text-shadow: 0 1px 0 #666;}
 			.smaller-text {font-size:30px;}
@@ -102,75 +115,15 @@
     </head>
     
     <body onload="pageLoaded()">
-        
-        <a href="http://www.aaronvanderzwan.com/blog/2011/11/maximage-2-0-beta1-release/" id="logo"><img src="lib/images/demo/logo.png" alt="MaxImage: Uses jQuery Cycle Plugin to create background slideshows" /></a>
-		<a href="" id="arrow_left"><img src="lib/images/demo/arrow_left.png" alt="Slide Left" /></a>
-		<a href="" id="arrow_right"><img src="lib/images/demo/arrow_right.png" alt="Slide Right" /></a>
-		
+
 		<img id="cycle-loader" src="lib/images/ajax-loader.gif" />
 		<div id="maximage">
-			<div>
-				<img src="lib/images/demo/wall_portrait.jpg" alt="" />
-				<img id="gradient" src="lib/images/demo/gradient.png" alt="" />
-				<div class="in-slide-content" style="display:none;">
-					<p>Remember, you are not limited to image elements.  You can display other HTML too.</p>
-					<p><a href="http://blog.aaronvanderzwan.com/2011/11/maximage-2-0-beta1-release/" target="_blank" style="font-weight:bold">More info >></a></p>
-				</div>
-			</div>
-			<div class="video">
-				<img src="lib/images/demo/pattern.jpg" alt="" />
-				<video controls="controls" muted="muted"  width="640" height="360">
-					<source src="assets/entrance.mp4" type="video/mp4" />
-					Your browser does not support HTML5 videos.
-				</video>
-			</div>
-			<img src="lib/images/demo/coalesse.jpg" alt="Coalesse" data-href="http://www.google.com/" />
-			<img src="lib/images/demo/laughing.jpg" alt="" />
-			<img src="lib/images/demo/roof_shooting.jpg" alt="" />
+			<img data-href="0.1" id='gradient' src='lib/images/demo/gradient.png' alt='' />
+			
 		</div>
         
         <script>
         
-        $(function(){
-				$('#maximage').maximage({
-					cycleOptions: {
-						fx: 'fade',
-						speed: 1000, // Has to match the speed for CSS transitions in jQuery.maximage.css (lines 30 - 33)
-						timeoutFn: function(currElement, nextElement, opts, isForward) { //use a custom function to change the timing (if its a video, we want the full video duration)
-						
-						    if($(currElement).find('video').length > 0) //this is not checking the length of the video, but the number of children which are of type video
-						    {
-						        return $(currElement).find('video').get(0).duration*1000;
-						    }else{
-						        return 1000;
-						    }
-                        },
-						prev: '#arrow_left',
-						next: '#arrow_right',
-						pause: 1,
-						before: function(last,current){
-							// Start HTML5 video when you arrive
-							if($(current).find('video').length > 0) $(current).find('video')[0].play(); //does not find the videos
-						},
-						after: function(last,current){
-							// Pauses HTML5 video when you leave it
-							if($(last).find('video').length > 0) $(last).find('video')[0].pause();
-						}
-					},
-					onFirstImageLoaded: function(){
-						jQuery('#cycle-loader').hide();
-						jQuery('#maximage').fadeIn('fast');
-					}
-				});
-	
-				// Helper function to Fill and Center the HTML5 Video
-				jQuery('video,object').maximage('maxcover');
-	
-				// To show it is dynamic html text
-				jQuery('.in-slide-content').delay(1200).fadeIn();
-			});
-
-		
         
         //Run on page load complete
             function pageLoaded()
@@ -189,15 +142,95 @@
                     {
                         var slides = JSON.parse(this.responseText); //parse it into a JS array of objects
                         
-                        //Get the list element
-                        var slidelist_element = document.getElementById("slidelist");
+                        //Get the maximage element
+                        var slideshow_div = document.getElementById("maximage");
                         
                         //Populate the list
+                        //console.log(this.responseText);
                         slides.forEach(function(element){
                             
-                        });
+                            //Create their node within div#maximage
+                            var slide = document.createElement("div");
+                            
+                            if(element['@attributes'].type == 'video')
+                            {
+                                var video_url = element.background;
+                                
+                                //Create video
+                                slide.className = 'video';
+                                slide.innerHTML = "<img src='"+video_url+"' alt=''/><video muted='muted'  width='640' height='360'  autobuffer='autobuffer' ><source src='"+video_url+"' type='video/mp4' />Your browser does not support HTML5 videos.</video>";
+                                
+                                
+                                
+                                /*
+                                <img src="lib/images/demo/pattern.jpg" alt="" />
+								<video controls="controls" muted="muted"  width="640" height="360">
+									<source src="assets/entrance.mp4" type="video/mp4" />
+									Your browser does not support HTML5 videos.
+								</video>
+                                */
+                            }else{
+                                //Create vars we'll need for our image/text
+                                var background_image = element.background;
+                                var english_title = element.english.title;
+                                var arabic_title = element.arabic.title;
+                                var english_description = element.english.description;
+                                var arabic_description = element.arabic.description;
+                                var duration = parseFloat(element['@attributes'].fadetime);
 
+                                //Create pic and stuff
+                                slide.innerHTML = "<img data-href='"+duration+"' src='"+ background_image +"' alt=''  /><img id='gradient' src='lib/images/demo/gradient.png' alt='' /><div class='in-slide-content en' style='display:none;'><h2>"+english_title+"</h2><p>"+english_description+"</p></div><div class='in-slide-content arabic' style='display:none;'><h2>"+ arabic_title +"</h2><p>"+ arabic_description +"</p></div>"
+
+                            }
+                            
+                            
+                            slideshow_div.appendChild(slide);
+                            
+                            
+                            
+                        });
+                        
+
+							$('#maximage').maximage({
+								cycleOptions: {
+									fx: 'fade',
+									speed: 1000, // Has to match the speed for CSS transitions in jQuery.maximage.css (lines 30 - 33)
+									timeoutFn: function(currElement, nextElement, opts, isForward) { //use a custom function to change the timing (if its a video, we want the full video duration)
+									    if($(currElement).find('video').length > 0) //this is not checking the length of the video, but the number of children which are of type video
+									    {
+									        return $(currElement).find('video').get(0).duration*1000;
+									    }else{
+									        return parseFloat($(currElement).attr('data-href'))*1000;
+									    }
+			                        },
+									prev: '#arrow_left',
+									next: '#arrow_right',
+									pause: 1,
+									before: function(last,current){
+										// Start HTML5 video when you arrive
+										if($(current).find('video').length > 0) $(current).find('video')[0].play(); //does not find the videos
+									},
+									after: function(last,current){
+										// Pauses HTML5 video when you leave it
+										if($(last).find('video').length > 0) $(last).find('video')[0].pause();
+									}
+								},
+								onFirstImageLoaded: function(){
+									jQuery('#cycle-loader').hide();
+									jQuery('#maximage').fadeIn('fast');
+								}
+							});
+	
+							// Helper function to Fill and Center the HTML5 Video
+							jQuery('video,object').maximage('maxcover');
+				
+							// To show it is dynamic html text
+							jQuery('.in-slide-content').delay(1200).fadeIn();
+
+                    
                     }
+                    
+                    
                 }
                 
                 //Get doc asynchronously

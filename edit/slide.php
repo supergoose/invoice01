@@ -9,7 +9,8 @@
             <p><input type="text" name="englishtitle" id="englishtitle" value=""></input><input type="text" name="arabictitle" id="arabictitle" value=""></input></p>
             <p><textarea name="englishtext" rows="10" cols="30" id="englishtext"></textarea>
             <textarea name="arabictext" rows="10" cols="30" id="arabictext"></textarea></p>
-            <p><input type="text" value="<?php echo $_GET['slideId']; ?>" name="slideId"></input></p>
+            <p>Slide position: <input type="text" value="<?php echo $_GET['slideId']; ?>" name="slideId"></input></p>
+            <p>Duration: <input type="text" value="" name="duration" id="duration"></input></p>
             <p><input type="submit" value="Save"/></p>
         </form>
         
@@ -32,6 +33,7 @@
                     {
                         console.log(this.responseText);
                         var slide = JSON.parse(this.responseText); //parse it into a JS array of objects
+                        document.getElementById('duration').value = slide['@attributes'].fadetime;
                         document.getElementById("englishtitle").value = slide.english.title;
                         document.getElementById("arabictitle").value = slide.arabic.title;
                         document.getElementById("englishtext").innerHTML = slide.english.description;

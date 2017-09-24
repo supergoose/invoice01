@@ -9,7 +9,6 @@
         <ol id="slidelist">
         </ol>
         <p>Add slide</p>
-        <p>Slideshow speed:</p>
         <script>
             
             var slides;
@@ -29,9 +28,7 @@
                     //Check was successful
                     if(this.readyState == 4 && this.status == 200)
                     {
-                        console.log(this.responseText);
                         var slides = JSON.parse(this.responseText); //parse it into a JS array of objects
-                        console.log(slides[0]["@attributes"]);
                         
                         //Get the list element
                         var slidelist_element = document.getElementById("slidelist");
@@ -40,7 +37,7 @@
                         slides.forEach(function(element){
                             var slide_listitem = document.createElement("li");
                             var enbld = (element['@attributes'].enabled == "yes")? "Disable":"Enable";
-                            slide_listitem.innerHTML = element.background + 
+                            slide_listitem.innerHTML = element.english.title + 
                             " <a href='#' onclick='toggleSlide("+element['@attributes'].id+")'>" + enbld + "</a>" +
                             " <a href='slide.php?slideId="+element['@attributes'].id+"'>Edit</a>" + 
                             " <a href='#' onclick='deleteSlide("+element['@attributes'].id+")'>Delete</a>";
