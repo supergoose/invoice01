@@ -1,0 +1,5 @@
+# Ignore Placeholder Images #
+###################
+
+lib/images/demo
+assets/
