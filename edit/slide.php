@@ -40,6 +40,14 @@
         
         <script>
         
+        var default_values = {
+            'duration' : 5.0,
+            'englishtitle' : 'Enter English title',
+            'arabictitle' : 'Enter Arabic title',
+            'englishtext' : 'Enter English description',
+            'arabictext' : 'Enter Arabic description'
+        };
+        
             //Run on page load complete
             function pageLoaded()
             {
@@ -64,12 +72,16 @@
                             return (option.value.indexOf(slide.background) > -1);
                         })[0];
                         
-                        selected_file.setAttribute('selected','selected');
-                        document.getElementById('duration').value = slide['@attributes'].fadetime;
-                        document.getElementById("englishtitle").value = slide.english.title;
-                        document.getElementById("arabictitle").value = slide.arabic.title;
-                        document.getElementById("englishtext").innerHTML = slide.english.description;
-                        document.getElementById("arabictext").innerHTML = slide.arabic.description;
+                        if(selected_file){
+                            selected_file.setAttribute('selected','selected');
+                            toggleText(slide.background);
+                        }
+                        
+                        document.getElementById('duration').value = (!slide['@attributes'].fadetime)?default_values['duration']:slide['@attributes'].fadetime;
+                        document.getElementById("englishtitle").value = (!slide.english.title)?default_values['englishtitle']:slide.english.title;
+                        document.getElementById("arabictitle").value = (!slide.arabic.title)?default_values['arabictitle']:slide.arabic.title;
+                        document.getElementById("englishtext").innerHTML = (!slide.english.description)?default_values['englishtext']:slide.english.description;
+                        document.getElementById("arabictext").innerHTML = (!slide.arabic.description)?default_values['arabictext']:slide.arabic.description;
                     }
                 }
                 
@@ -79,16 +91,21 @@
             
             function selectedbg()
             {
+                toggleText(document.getElementById('selectbg').value);
+                
+            }
+            
+            //Pass me a filename
+            function toggleText(filename)
+            {
                 var vid_extensions = ['mp4'];
-                var file_extension = document.getElementById('selectbg').value.split('.').pop();
+                var file_extension = filename.split('.').pop();
                 if(vid_extensions.indexOf(file_extension) > -1)
                 {
-                    console.log("selected video");
                     document.getElementById('textentry').style.display = 'none';
                 }else{
                     document.getElementById('textentry').style.display = 'block';
                 }
-                
             }
             
             //If the user presses space we need to navigate to our edit mode
