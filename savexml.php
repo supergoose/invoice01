@@ -24,10 +24,10 @@ if(in_array($ext, $img_extensions))
 {
     $type='image';
     
-    $english_title = $_POST["englishtitle"];
-    $arabic_title = $_POST["arabictitle"];
-    $english_description = $_POST["englishtext"];
-    $arabic_description = $_POST["arabictext"];
+    $english_title = filter_var ( $_POST["englishtitle"], FILTER_SANITIZE_STRING);
+    $arabic_title = filter_var ( $_POST["arabictitle"], FILTER_SANITIZE_STRING);
+    $english_description = filter_var ( $_POST["englishtext"], FILTER_SANITIZE_STRING);
+    $arabic_description = filter_var ( $_POST["arabictext"], FILTER_SANITIZE_STRING);
     $duration = $_POST["duration"];
     
 }else if(in_array($ext, $vid_extensions))
@@ -41,12 +41,13 @@ $editing_node->background = $background;
 $editing_node['type'] = $type;
 $editing_node->english->title = $english_title;
 $editing_node->arabic->title = $arabic_title;
-$editing_node->english->description = $english_description;
+$editing_node->english->description = nl2br(trim($english_description));
+$editing_node->arabic->description = nl2br(trim($arabic_description));
 $editing_node['fadetime'] = $duration;
 
 
 $xml->asXml('content.xml');
 
-header( 'Location: edit/slideshow.html' ) ;
+header( 'Location: slideshow.html' ) ;
 
 ?>

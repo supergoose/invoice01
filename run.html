@@ -4,6 +4,7 @@
 
         <!-- CSS -->
         <link rel="stylesheet" href="lib/css/jquery.maximage.css" type="text/css" media="screen" title="CSS" charset="utf-8" />
+        <link href="lib/css/font-styles.css" rel="stylesheet">
         
         <!-- JS -->
         <script type="text/javascript" src="lib/js/mousetrap.js"></script>
@@ -14,6 +15,29 @@
         
         <!-- In page CSS -->
         <style type="text/css" media="screen">
+
+        html, body, div, span, applet, object, iframe,
+		h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+		a, abbr, acronym, address, big, cite, code,
+		del, dfn, em, img, ins, kbd, q, s, samp,
+		small, strike, strong, sub, sup, tt, var,
+		b, u, i, center,
+		dl, dt, dd, ol, ul, li,
+		fieldset, form, label, legend,
+		table, caption, tbody, tfoot, thead, tr, th, td,
+		article, aside, canvas, details, embed,
+		figure, figcaption, footer, header, hgroup,
+		menu, nav, output, ruby, section, summary,
+		time, mark, audio, video {
+			margin: 0;
+			padding: 0;
+			border: 0;
+			font-size: 100%;
+			font: inherit;
+			vertical-align: baseline;
+		}
+        * {cursor: none;}
+        
 			/* I wanted to center my loader */
 			#cycle-loader {
 				height:32px;
@@ -77,33 +101,39 @@
 			a:hover {text-decoration:underline;}
 			
 			.in-slide-content { 
-				color:#333;
+				color:#b2b2b2;
 				float:right;
 				font-family:'Helvetica Neue', helvetica;
-				line-height:2;
-				font-weight:bold;
-				margin:40px;
+				margin:20px 50px;
 				padding:20px;
 				position:absolute;
 				top:0;
-				width:800px;
+				width:640px;
 				z-index:9999; /* Show above .gradient */
-				text-shadow: 0 1px 0 #fff;
+				/*text-shadow: 0 1px 0 #fff;*/
+				
 				-webkit-font-smoothing:antialiased;
 			}
 			.in-slide-content h2{
-			    font-size:40px;
+			    font-size:60px;
+			    margin:0;
+				padding:0;
+				text-transform: uppercase;
 			}
 			
 			.in-slide-content p{
-			    font-size:20px;
+			    font-size:40px;
+			    line-height:1.2;
+			    margin:30px 0 0 20px;
 			}
 			.en{
 			    left:0;
+			    font-family: 'Praxis Com'; font-weight: normal; font-style: normal;
 			}
 			.arabic{
 			    right:0;
 			    text-align: right;
+			    font-family: 'Muna'; font-weight: normal; font-style: normal;
 			}
 			.light-text {color:#ddd;text-shadow: 0 1px 0 #666;}
 			.smaller-text {font-size:30px;}
@@ -189,7 +219,7 @@
 	                            var duration = parseFloat(element['@attributes'].fadetime);
 	
 	                            //Create pic and stuff
-	                            slide.innerHTML = "<img data-href='"+duration+"' src='"+ background_image +"' alt=''  /><img id='gradient' src='assets/gradient.png' alt='' /><div class='in-slide-content en' style='display:none;'><h2>"+english_title+"</h2><p>"+english_description+"</p></div><div class='in-slide-content arabic' style='display:none;'><h2>"+ arabic_title +"</h2><p>"+ arabic_description +"</p></div>"
+	                            slide.innerHTML = "<img data-href='"+duration+"' src='"+ background_image +"' alt=''  /><div class='in-slide-content en' style='display:none;'><h2>"+english_title+"</h2><p>"+english_description+"</p></div><div class='in-slide-content arabic' style='display:none;'><h2>"+ arabic_title +"</h2><p>"+ arabic_description +"</p></div>"
 								slide.className = (first)?'first-item':'';
 	                        }
 	                        
@@ -223,7 +253,7 @@
 						//Some jiggery pokery to make sure that the first video plays. We failsafe to the shortest video length to make sure the slideshow still looks ok.
 						    if($(currElement).find('video').length > 0) //this is not checking the length of the video, but the number of children which are of type video
 						    {
-						        return ((isNaN($(currElement).find('video').get(0).duration))?minVidDuration:$(currElement).find('video').get(0).duration)*1000; //check if NaN, return min duration if so
+						        return ((isNaN($(currElement).find('video').get(0).duration))?minVidDuration:$(currElement).find('video').get(0).duration)*1000-1500; //check if NaN, return min duration if so
 						    }else{
 						        return parseFloat($(currElement).attr('data-href'))*1000; //Our images store their length in the data-href attribute.
 						    }
@@ -284,7 +314,7 @@
 	    
 	        //If the user presses space we need to navigate to our edit mode
 	        Mousetrap.bind('space', function(e) {
-	            window.location.href = "/edit/slideshow.html";
+	            window.location.href = "slideshow.html";
 	            
 	        });
         </script>
