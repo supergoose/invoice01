@@ -2,7 +2,7 @@
 <slideshow>
     
     
-    <slide id="2" enabled="yes" type="image" fadetime="10.0">
+    <slide id="3" enabled="yes" type="image" fadetime="10.0">
         <background>assets/life-gallery-bg-2.jpg</background>
         <english>
             <title>Page 3</title>
@@ -20,13 +20,11 @@ Pellentesque ullamcorper, velit quis ultrices suscipit, odio sapien malesuada au
         </arabic>
     </slide>
     
-    <slide id="0" enabled="yes" type="image" fadetime="10.0">
-        <background>assets/life-gallery-bg-1.jpg</background>
+    <slide id="2" enabled="yes" type="image" fadetime="5.0">
+        <background>assets/pattern.jpg</background>
         <english>
             <title>Page 2</title>
-            <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin molestie leo non nibh mollis facilisis. Vestibulum lacinia sem velit. &lt;br /&gt;&#xD;
-&lt;br /&gt;&#xD;
-Pellentesque ullamcorper, velit quis ultrices suscipit, odio sapien malesuada augue, sed feugiat nisl nulla eu tortor. Aliquam erat volutpat. Morbi sed posuere enim, vitae viverra mauris. Quisque maximus velit quis ipsum lobortis, vel mattis sem pellentesque.</description>
+            <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin molestie leo non nibh mollis facilisis. Vestibulum lacinia sem velit.</description>
         </english>
         <arabic>
             <title>&#x633;&#x64A;&#x644;&#x64A;&#x633;</title>
@@ -36,7 +34,7 @@ Pellentesque ullamcorper, velit quis ultrices suscipit, odio sapien malesuada au
         </arabic>
     </slide>
     
-    <slide id="4" enabled="yes" type="image" fadetime="10.0">
+    <slide id="6" enabled="yes" type="image" fadetime="10.0">
         <background>assets/life-gallery-bg-1.jpg</background>
         <english>
             <title>Another Page</title>
@@ -50,4 +48,8 @@ Aliquam erat volutpat.</description>
             <title>&#x62A;&#x633;&#x64A; &#x64A;&#x633;&#x633;&#x646;&#x643;&#x645;&#x645;&#x62A;&#x64A;&#x633; </title>
             <description>&#x636;&#x635;&#x62B;&#x64A;&#x633;&#x628;&#x64A;&#x633;&#x628;&#x633;&#x64A;&#x644;&#x633;&#x64A;  &#x633;&#x64A;&#x644;&#x64A;&#x633; &#x644;&#x633;&#x64A; &#x64A;&#x633;&#x633;&#x646;&#x643;&#x645;&#x645;&#x62A;&#x64A;&#x633; &#x62A;&#x633;&#x64A; &#x645;&#x628;&#x646;&#x62A; &#x633;&#x64A;&#x645;&#x646;&#x628;&#x62A;&#x627; &#x633;&#x64A;&#x645;&#x646;&#x627;&#x62A;&#x645;&#x628;&#x645;&#x62A;&#x646;&#x633;&#x64A;&#x627;&#x628;&#x62A;&#x633;&#x64A;&#x646;&#x628; &#x627;&#x646;&#x633;&#x62A;&#x64A;&#x627;&#x628;&#x646;&#x62A;&#x633;&#x64A;&#x627; &#x628;&#x646;&#x62A;&#x627; &#x633;&#x64A;&#x646;&#x62A;&#x628;&#x627; &#x633;&#x646;&#x64A;&#x62A;&#x627;&#x628;&#x646;&#x633;&#x62A;&#x627;&#x64A;&#x644;&#x646;&#x62A;&#x633;&#x627;&#x64A;&#x644;&#x643;&#x646;&#x645;&#x62A;&#x633;&#x64A;&#x627;&#x644;&#x643;&#x645;&#x646;&#x62A;&#x627;&#x633;&#x64A;&#x643;&#x644;&#x645;&#x646;&#x627; &#x633;&#x627;&#x64A;&#x643;&#x630;&#x644;&#x645;&#x630;&#x647;&#x646;&#x643;&#x643;&#x62A;&#x627;&#x633;&#x643;&#x64A;&#x645;&#x630;&#x646;&#x644;&#x627;  &#x62A;&#x643;&#x633;&#x64A;&#x645;&#x646; &#x62A;&#x627;&#x644; &#x645;&#x643;&#x646;&#x62A;&#x633; &#x64A;&#x627; &#x644;&#x645;&#x646;&#x62A;&#x627;&#x633;&#x64A; &#x644;&#x645;&#x643;&#x646;&#x62A;&#x627;&#x633;&#x64A;&#x644; &#x643;&#x645;&#x646;&#x62A;&#x633;&#x627;&#x64A; &#x644;&#x645;&#x643;&#x646;&#x62A;&#x627;&#x633;&#x64A;&#x644; &#x643;&#x645;&#x646;&#x62A;&#x627;&#x633;&#x64A;&#x644; &#x643;&#x62A;&#x646;&#x645;&#x627;&#x633;&#x64A;&#x644;&#x643; &#x62A;&#x627;&#x633;&#x64A; &#x644;&#x633;&#x64A;&#x644; &#x643;&#x62A;&#x646;&#x645;&#x627;&#x633;&#x64A;&#x644;&#x643; &#x62A;&#x627;&#x633;&#x64A; &#x644; &#x633;&#x64A;&#x644; &#x643;&#x62A;&#x646;&#x645;&#x627;&#x633;&#x64A;&#x644;&#x643; &#x62A;&#x627;&#x633;&#x64A; &#x644;&#x633;&#x64A;&#x644; &#x643;&#x62A;&#x646;&#x645;&#x627;&#x633;&#x64A;&#x644;&#x643; &#x62A;&#x627;&#x633;&#x64A; &#x644;</description>
         </arabic>
-    </slide><slide id="3" enabled="yes" fadetime="" type="video"><background>assets/entrance.mp4</background><english><title>entrance.mp4</title><description></description></english><arabic><title></title><description></description></arabic></slide><slide id="1" enabled="yes" fadetime="" type="video"><background>assets/SABIC Films Intro and Outro.mp4</background><english><title>SABIC Films Intro and Outro.mp4</title><description/></english><arabic><title/><description/></arabic></slide><slide id="5" enabled="yes" fadetime="" type="video"><background>assets/SABIC Films Intro and Outro.mp4</background><english><title>SABIC Films Intro and Outro.mp4</title><description/></english><arabic><title/><description/></arabic></slide></slideshow>
+    </slide><slide id="4" enabled="yes" fadetime="" type="video"><background>assets/entrance.mp4</background><english><title>entrance.mp4</title><description/></english><arabic><title/><description/></arabic></slide><slide id="1" enabled="yes" fadetime="" type="video"><background>assets/SABIC Films Intro and Outro.mp4</background><english><title>SABIC Films Intro and Outro.mp4</title><description/></english><arabic><title/><description/></arabic></slide><slide id="7" enabled="yes" fadetime="" type="video"><background>assets/SABIC Films Intro and Outro.mp4</background><english><title>SABIC Films Intro and Outro.mp4</title><description/></english><arabic><title/><description/></arabic></slide><slide id="5" enabled="yes" fadetime="" type="video"><background>assets/entrance.mp4</background><english><title>entrance.mp4</title><description/></english><arabic><title/><description/></arabic></slide><slide id="0" enabled="yes" fadetime="10" type="image"><background>assets/life-gallery-bg-2.jpg</background><english><title>My new slide #4</title><description>Here will be my English description of this slide. Here will be my English description of this slide.&lt;br /&gt;&#xD;
+&lt;br /&gt;&#xD;
+Here will be my English description of this slide.</description></english><arabic><title>Arabic Title</title><description>Does not display in the right font...&lt;br /&gt;&#xD;
+&lt;br /&gt;&#xD;
+Should enter text from right to left</description></arabic></slide></slideshow>

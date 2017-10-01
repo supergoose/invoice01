@@ -37,6 +37,11 @@
                 font-family: 'Praxis Com'; font-weight: normal; font-style: normal;
             }
             
+            .ara
+            {
+                font-family: 'Praxis Com'; font-weight: normal; font-style: normal;
+            }
+            
             input[type=text], textarea{
                 border: 2px solid #e2e2e2;
                 overflow-x: hidden;
@@ -64,10 +69,11 @@
         <form action="savexml.php" method="POST" class='mt-1'>
                         <div id="textentry" class='mt-1'>
                 <p><input type="text" name="englishtitle" id="englishtitle" value="" class='slide-title eng' ></input>
-                <textarea name="arabictitle" rows="1" cols="30" id="arabictitle" class='float-right slide-title' lang='ara' dir="rtl"></textarea></p>
+                <textarea name="arabictitle" rows="1" cols="30" id="arabictitle" class='float-right slide-title ara' lang='ara' dir="rtl"></textarea></p>
                 <p><textarea name="englishtext" rows="10" cols="30" id="englishtext" class='small-text eng'></textarea>
-                <textarea name="arabictext" rows="10" cols="30" id="arabictext" class='float-right small-text' lang='ara' dir="rtl"></textarea></p>
+                <textarea name="arabictext" rows="10" cols="30" id="arabictext" class='float-right small-text ara' lang='ara' dir="rtl"></textarea></p>
                 <p class='more-input'>Duration (seconds): <input type="text" value="" name="duration" id="duration" ></input></p>
+                </div>
                 <p class='more-input'>Background: <select name="background" onchange="selectedbg()" id="selectbg">
             <?php 
             
@@ -90,7 +96,7 @@
             </select>
             
             </p>
-            </div>
+            
             <p style="display:none;">Slide position: <input type="text" value="<?php echo $_GET['slideId']; ?>" name="slideId"></input></p>
             
             <p><input type="submit" value="Save" class="float-right"/></p>
